@@ -1,11 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DEMO.Tool;
 using UnityEngine;
 
 public class TP_CameraControl : MonoBehaviour {
-    private GameInputManager _gameInputManager;
-
     [Header("相机参数配置")]
     [SerializeField] private Vector2 _cameraVerticalMaxAngle; // 相机垂直角度限制
 
@@ -21,7 +20,6 @@ public class TP_CameraControl : MonoBehaviour {
     private Vector3 _smoothDampVelocity;
 
     private void Awake() {
-        _gameInputManager = GetComponent<GameInputManager>();
         _lookTarget = GameObject.FindWithTag("CameraTarget").transform;
     }
 
@@ -35,8 +33,8 @@ public class TP_CameraControl : MonoBehaviour {
     }
 
     private void CameraInput() {
-        _input.y += _gameInputManager.CameraLook.x * _controlSpeed; // 水平
-        _input.x -= _gameInputManager.CameraLook.y * _controlSpeed; // 垂直
+        _input.y += GameInputManager.MainInstance.CameraLook.x * _controlSpeed; // 水平
+        _input.x -= GameInputManager.MainInstance.CameraLook.y * _controlSpeed; // 垂直
         _input.x = Mathf.Clamp(_input.x, _cameraVerticalMaxAngle.x, _cameraVerticalMaxAngle.y);
     }
 
@@ -48,6 +46,7 @@ public class TP_CameraControl : MonoBehaviour {
 
     private void CameraPosition() {
         var newPosition = _lookTarget.position + -transform.forward * _positionOffset;
-        transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime * _positionSmoothTime);
+        transform.position = Vector3.Lerp(transform.position, newPosition,
+            DevelopmentToos.UnTetheredLerp(_positionSmoothTime));
     }
 }
