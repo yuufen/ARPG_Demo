@@ -9,6 +9,7 @@ public class GameInputManager : Singleton<GameInputManager> {
 
     public Vector2 Movement => _gameInputAction.GameInput.Movement.ReadValue<Vector2>();
     public Vector2 CameraLook => _gameInputAction.GameInput.CameraLook.ReadValue<Vector2>();
+    public bool Run => _gameInputAction.GameInput.Run.triggered;
 
     private void Awake() {
         base.Awake();
