@@ -10,6 +10,8 @@ namespace DEMO.Movement {
         protected CharacterController _control;
         protected Animator _animator;
 
+        protected Vector3 _moveDirection;
+
         // 地面检测
         protected bool _characterIsOnGround; // 角色是否在地面上
         [SerializeField, Header("地面检测")] protected float _groundDetectionPositionOffset;
@@ -35,17 +37,31 @@ namespace DEMO.Movement {
             _falloutDeltaTime = _falloutTime; // 初始化
         }
 
-        void Update() {
+        private void Update() {
             SetCharacterGravity();
             UpdateCharacterGravity();
         }
 
+        // 用于修改 Animator 根运动处理 transform 的逻辑。这里通过 RootMotion 驱动角色移动
+        protected virtual void OnAnimatorMove() {
+            // 声明 OnAnimatorMove 方法之后默认的 RootMotion 将不应用在 transform 上
+            // 所以这里手动应用默认的 Root Motion
+            _animator.ApplyBuiltinRootMotion();
+            // 然后将 RootMotion 移动量经过处理后传入 CharacterController 的 Move 方法，通过控制器的 Move 修改 Transform
+            // TODO 但是控制器的 Move 方法并没有生效，因为 Builtin RootMotion 会覆盖掉 transform
+            // TODO 所以应该去改 RootMotion 的 Move 逻辑
+            // TODO 但是下面重力的 Move 能生效，可能是因为 RootMotion 只有 xz 的移动
+            // UpdateCharacterMoveDirection(_animator.deltaPosition);
+        }
 
         // 地面检测
         private bool GroundDetection() {
             var position = transform.position;
-            var detectionPosition = new Vector3(position.x, position.y - _groundDetectionPositionOffset, position.z); // 检测球的中心
-            return Physics.CheckSphere(detectionPosition, DetectionRange, _whatIsGround, QueryTriggerInteraction.Ignore); // 检测球和地面的碰撞，忽略触发器
+            // 检测球的中心
+            var detectionPosition = new Vector3(position.x, position.y - _groundDetectionPositionOffset, position.z);
+            // 检测球和地面的碰撞
+            return Physics.CheckSphere(detectionPosition, DetectionRange, _whatIsGround,
+                QueryTriggerInteraction.Ignore);
         }
 
         // 重力
@@ -98,10 +114,16 @@ namespace DEMO.Movement {
                     moveDirection = Vector3.ProjectOnPlane(moveDirection, hit.normal);
                 }
             }
+
             return moveDirection;
         }
 
-        
+
+        protected void UpdateCharacterMoveDirection(Vector3 direction) {
+            _moveDirection = SlopResetDirection(direction);
+            _control.Move(_moveDirection * Time.deltaTime);
+        }
+
         void OnDrawGizmos() {
             // 绘制地面检测范围
             var position = transform.position;
