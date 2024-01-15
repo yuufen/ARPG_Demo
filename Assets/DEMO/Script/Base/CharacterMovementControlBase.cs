@@ -27,14 +27,25 @@ namespace DEMO.Movement {
 
         protected Vector3 _characterVerticalDirection; // 角色三轴移动速度
 
+        protected bool _isGravityEnable;
+
         // 虚方法，就是可以被子类重写的方法
         protected virtual void Awake() {
             _control = GetComponent<CharacterController>();
             _animator = GetComponent<Animator>();
         }
 
+        protected virtual void OnEnable() {
+            GameEventManager.MainInstance.AddListener<bool>("EnableCharacterGravity", SetIsGravityEnable);
+        }
+
+        protected virtual void OnDisable() {
+            GameEventManager.MainInstance.RemoveListener<bool>("EnableCharacterGravity", SetIsGravityEnable);
+        }
+
         protected void Start() {
             _falloutDeltaTime = _falloutTime; // 初始化
+            _isGravityEnable = true;
         }
 
         private void Update() {
@@ -83,13 +94,15 @@ namespace DEMO.Movement {
                 }
 
                 // 重力加速
-                if (_characterVerticalVelocity < _characterVerticalMaxVelocity) {
+                if (_characterVerticalVelocity < _characterVerticalMaxVelocity && _isGravityEnable) {
                     _characterVerticalVelocity += CharacterGravity * Time.deltaTime;
                 }
             }
         }
 
         private void UpdateCharacterGravity() {
+            if (!_isGravityEnable) return;
+
             // 重力模块只负责垂直方向移动
             _characterVerticalDirection.Set(0, _characterVerticalVelocity, 0);
             _control.Move(_characterVerticalDirection * Time.deltaTime);
@@ -122,6 +135,12 @@ namespace DEMO.Movement {
         protected void UpdateCharacterMoveDirection(Vector3 direction) {
             _moveDirection = SlopResetDirection(direction);
             _control.Move(_moveDirection * Time.deltaTime);
+        }
+
+        // 设置 _isGravityEnable
+        private void SetIsGravityEnable(bool enable) {
+            _isGravityEnable = enable;
+            _characterVerticalVelocity = enable ? -2f : 0f;
         }
 
         void OnDrawGizmos() {
