@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - CameraTarget
+  - "\u9AD8\u5899"
+  - "\u4E2D\u9AD8\u5899"
   layers:
   - Default
   - TransparentFX

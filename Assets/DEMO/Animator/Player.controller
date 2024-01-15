@@ -569,8 +569,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startTime: 0
-  _endTime: 0.21
-  _avatarTarget: 0
+  _endTime: 0.3
+  _avatarTarget: 4
   _enableGravity: 1
   _enableTime: 0.6
 --- !u!206 &9111831123665852092
