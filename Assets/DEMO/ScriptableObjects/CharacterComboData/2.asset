@@ -9,7 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5835e55802494c97bbfff10384832b36, type: 3}
-  m_Name: Combo
+  m_Script: {fileID: 11500000, guid: d28c51556e234c3293df7794585be5b5, type: 3}
+  m_Name: 2
   m_EditorClassIdentifier: 
-  _allComboData: []
+  _comboName: 2
+  _comboHitName: []
+  _comboParryName: []
+  _damage: 0
+  _coldTime: 0.6
+  _comboPositionOffset: 0

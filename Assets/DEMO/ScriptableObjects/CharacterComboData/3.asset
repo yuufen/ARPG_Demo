@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d28c51556e234c3293df7794585be5b5, type: 3}
-  m_Name: ComboData 1
+  m_Name: 3
   m_EditorClassIdentifier: 
-  _comboName: 
+  _comboName: 3
   _comboHitName: []
   _comboParryName: []
   _damage: 0
-  _coldTime: 0
+  _coldTime: 0.8
   _comboPositionOffset: 0

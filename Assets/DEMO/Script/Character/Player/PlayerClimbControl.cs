@@ -34,9 +34,9 @@ public class PlayerClimbControl : MonoBehaviour {
             var rotation = Quaternion.LookRotation(-_hit.normal); // 让角色正朝墙壁
             var position = new Vector3(
                 _hit.point.x, // xz 坐标即射线 hit 坐标
-                _hit.collider.bounds.max.y , // 墙最高处世界y坐标
+                _hit.collider.bounds.max.y, // 墙最高处世界y坐标
                 _hit.point.z
-            );// Match Target Position
+            ); // Match Target Position
 
             switch (_hit.collider.tag) {
                 case "中高墙":
