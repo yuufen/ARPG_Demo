@@ -13,6 +13,11 @@ namespace DEMO.Movement {
 
         private Transform _mainCamera;
 
+        // 脚步声
+        private float _nextFootTime;
+        [SerializeField] private float _walkFootTime;
+        [SerializeField] private float _runFootTime;
+
         protected override void Awake() {
             base.Awake();
             _mainCamera = Camera.main.transform;
@@ -34,7 +39,7 @@ namespace DEMO.Movement {
                 if (GameInputManager.MainInstance.Run) {
                     _animator.SetBool(AnimationID.RunId, true);
                 }
-                
+
                 // 手柄没按奔跑，速度就是摇杆输入值，按了奔跑就锁定 2
                 _animator.SetFloat(
                     AnimationID.MovementId,
@@ -42,6 +47,8 @@ namespace DEMO.Movement {
                     0.25f,
                     Time.deltaTime
                 );
+
+                PlayCharacterFootSound(); // TODO 用 animation event 更合适
             } else {
                 _animator.SetFloat(
                     AnimationID.MovementId,
@@ -76,6 +83,23 @@ namespace DEMO.Movement {
                 // Motion 状态下才旋转角色（不然被打了还能旋转）
                 transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(transform.eulerAngles.y, _rotationAngle,
                     ref _rotateVelocity, _rotateSmoothTime);
+            }
+        }
+
+
+        // 播放角色脚步声
+        // TODO 用 animation event 更合适
+        private void PlayCharacterFootSound() {
+            if (_characterIsOnGround && _animator.GetFloat(AnimationID.MovementId) > 0.5f &&
+                _animator.AnimationAtTag("Motion")) {
+                // 如果角色在地面且在移动动画中
+                _nextFootTime -= Time.deltaTime;
+                if (_nextFootTime < 0f) {
+                    ObjectPoolManager.MainInstance.TryGetPoolItem("FootSound", transform.position, transform.rotation);
+                    _nextFootTime = _animator.GetFloat(AnimationID.MovementId) > 1.1f ? _runFootTime : _walkFootTime;
+                }
+            } else {
+                _nextFootTime = 0f;
             }
         }
     }
