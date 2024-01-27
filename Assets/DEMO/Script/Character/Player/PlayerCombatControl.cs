@@ -30,6 +30,7 @@ namespace DEMO.Combat {
 
         private void Update() {
             CharacterBaseAttackInput();
+            HandleComboBreak();
         }
 
 
@@ -49,6 +50,7 @@ namespace DEMO.Combat {
             return true;
         }
 
+        // 角色 Base Combo 输入
         private void CharacterBaseAttackInput() {
             if (!CanBaseAttack()) return;
 
@@ -61,8 +63,11 @@ namespace DEMO.Combat {
 
                 ExecuteComboAction();
             }
+            
+            
         }
 
+        // 执行招式
         private void ExecuteComboAction() {
             // 重置招式 Info
             _currentHitIndex = 0;
@@ -80,6 +85,7 @@ namespace DEMO.Combat {
             _canAttack = false; // 冷却期间禁止攻击
         }
 
+        // 更新连招信息
         private void UpdateComboInfo() {
             _currentComboIndex++;
 
@@ -87,10 +93,20 @@ namespace DEMO.Combat {
             _canAttack = true;
         }
 
+        // 重置连招信息
         private void ResetComboInfo() {
             _currentComboIndex = 0;
             _currentHitIndex = 0;
             _currentColdTime = 0f;
+        }
+
+        // 处理连招中断
+        private void HandleComboBreak() {
+            // 连招过程中移动会中断连招
+            // TODO 还有受击、格挡等也会打断连招
+            if (_animator.AnimationAtTag("Motion")) {
+                ResetComboInfo();
+            }
         }
 
         #endregion
