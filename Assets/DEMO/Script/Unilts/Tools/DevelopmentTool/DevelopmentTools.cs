@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DEMO.Tool
 {
-    public class DevelopmentToos
+    public class DevelopmentTools
     {
 
         /// <summary>

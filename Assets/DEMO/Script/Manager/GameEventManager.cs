@@ -123,7 +123,7 @@ public class GameEventManager : SingletonNonMono<GameEventManager> {
         if (_eventCenter.TryGetValue(eventName, out var e)) {
             (e as EventHelper)?.Call();
         } else {
-            DevelopmentToos.WTF($"未找到 <{eventName}> 事件");
+            DevelopmentTools.WTF($"未找到 <{eventName}> 事件");
         }
     }
 
@@ -131,7 +131,7 @@ public class GameEventManager : SingletonNonMono<GameEventManager> {
         if (_eventCenter.TryGetValue(eventName, out var e)) {
             (e as EventHelper<T>)?.Call(value);
         } else {
-            DevelopmentToos.WTF($"未找到 <{eventName}> 事件");
+            DevelopmentTools.WTF($"未找到 <{eventName}> 事件");
         }
     }
 
@@ -139,7 +139,7 @@ public class GameEventManager : SingletonNonMono<GameEventManager> {
         if (_eventCenter.TryGetValue(eventName, out var e)) {
             (e as EventHelper<T1, T2>)?.Call(value1, value2);
         } else {
-            DevelopmentToos.WTF($"未找到 <{eventName}> 事件");
+            DevelopmentTools.WTF($"未找到 <{eventName}> 事件");
         }
     }
 
@@ -153,7 +153,7 @@ public class GameEventManager : SingletonNonMono<GameEventManager> {
         if (_eventCenter.TryGetValue(eventName, out var e)) {
             (e as EventHelper)?.Remove(action);
         } else {
-            DevelopmentToos.WTF($"未找到 <{eventName}> 事件");
+            DevelopmentTools.WTF($"未找到 <{eventName}> 事件");
         }
     }
 
@@ -161,7 +161,7 @@ public class GameEventManager : SingletonNonMono<GameEventManager> {
         if (_eventCenter.TryGetValue(eventName, out var e)) {
             (e as EventHelper<T>)?.Remove(action);
         } else {
-            DevelopmentToos.WTF($"未找到 <{eventName}> 事件");
+            DevelopmentTools.WTF($"未找到 <{eventName}> 事件");
         }
     }
 
@@ -169,7 +169,7 @@ public class GameEventManager : SingletonNonMono<GameEventManager> {
         if (_eventCenter.TryGetValue(eventName, out var e)) {
             (e as EventHelper<T1, T2>)?.Remove(action);
         } else {
-            DevelopmentToos.WTF($"未找到 <{eventName}> 事件");
+            DevelopmentTools.WTF($"未找到 <{eventName}> 事件");
         }
     }
 }

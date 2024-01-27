@@ -53,7 +53,7 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager> {
 
     public void TryGetPoolItem(string name, Vector3 position, Quaternion rotation) {
         if (!_poolCenter.ContainsKey(name)) {
-            DevelopmentToos.WTF("申请的对象池不存在" + name);
+            DevelopmentTools.WTF("申请的对象池不存在" + name);
         }
 
         var item = _poolCenter[name].Dequeue();
@@ -68,7 +68,7 @@ public class ObjectPoolManager : Singleton<ObjectPoolManager> {
 
     public GameObject TryGetPoolItem(string name) {
         if (!_poolCenter.ContainsKey(name)) {
-            DevelopmentToos.WTF("申请的对象池不存在" + name);
+            DevelopmentTools.WTF("申请的对象池不存在" + name);
             return null;
         }
 

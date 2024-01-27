@@ -17,7 +17,7 @@ namespace DEMO.Tool
             var direction = (target - transform.position).normalized;
             direction.y = 0f;
             Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation,lookRotation,DevelopmentToos.UnTetheredLerp(timer));
+            transform.rotation = Quaternion.Slerp(transform.rotation,lookRotation,DevelopmentTools.UnTetheredLerp(timer));
         }
         
         /// <summary>

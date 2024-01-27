@@ -481,6 +481,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   _rotateSmoothTime: 0.15
+  _walkFootTime: 0.38
+  _runFootTime: 0.3
 --- !u!143 &394624502
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1054,6 +1056,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 192
   _rotateSmoothTime: 0
+  _walkFootTime: 0
+  _runFootTime: 0
 --- !u!143 &1348715940
 CharacterController:
   m_ObjectHideFlags: 0

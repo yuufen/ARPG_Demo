@@ -40,7 +40,7 @@ public class CameraCollider : MonoBehaviour {
 
         _mainCamera.localPosition = Vector3.Lerp(_mainCamera.localPosition,
             new Vector3(0, 0, -1) * (_currentOffsetDistance - 0.1f), // -0.1 防止近平面穿模
-            DevelopmentToos.UnTetheredLerp(_colliderSmoothTime));
+            DevelopmentTools.UnTetheredLerp(_colliderSmoothTime));
     }
 
     void OnDrawGizmos() {
